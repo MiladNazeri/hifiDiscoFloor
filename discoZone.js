@@ -16,6 +16,7 @@
 (function() {
 
     function DiscoZone() {
+        alert("here")
         return;
     }
 

@@ -37,16 +37,16 @@ var positionXHigh = Math.max(position1.x, position2.x, position3.x, position4.x)
 var positionXLow = Math.min(position1.x, position2.x, position3.x, position4.x);
 var positionZHigh = Math.max(position1.z, position2.z, position3.z, position4.z);
 var positionZLow = Math.min(position1.z, position2.z, position3.z, position4.z);
-print("positionXHigh", positionXHigh);
-print("positionXLow", positionXLow);
-print("positionZHigh", positionZHigh);
-print("positionZLow", positionZLow);
+// print("positionXHigh", positionXHigh);
+// print("positionXLow", positionXLow);
+// print("positionZHigh", positionZHigh);
+// print("positionZLow", positionZLow);
 
 
 var positionXOffset = ((positionXHigh - positionXLow) / 2) + positionXLow;
 var positionZOffset = ((positionZHigh - positionZLow) / 2) + positionZLow;
-print("positionXOffset", positionXOffset);
-print("positionZOffset", positionZOffset);
+// print("positionXOffset", positionXOffset);
+// print("positionZOffset", positionZOffset);
 // var numColumns = 100;
 // var numRows = 100;
 // var tileDimensionX = 2;
@@ -54,8 +54,8 @@ print("positionZOffset", positionZOffset);
 // var tileDimensionZ = 2;
 // var positionY = 0;
 
-var numColumns = 8;
-var numRows = 8;
+var numColumns = 4;
+var numRows = 4;
 var tileDimensionX = 1;
 var tileDimensionY = 1;
 var tileDimensionZ = 1;
@@ -69,7 +69,7 @@ var colorPallet = [
     { "base":{ "red": 128, "green": 0, "blue": 128 }, "highlight":{ "red": 186, "green": 85, "blue": 211 }},
     { "base":{ "red": 255, "green": 127, "blue": 80 }, "highlight":{ "red": 255, "green": 165, "blue": 0 }},
     { "base":{ "red": 255, "green": 255, "blue": 0 }, "highlight":{ "red": 255, "green": 255, "blue": 200 }},
-    { "base":{ "red": 128, "green": 0, "blue": 0 }, "highlight":{ "red": 178, "green": 34, "blue": 34 }},
+    { "base":{ "red": 128, "green": 0, "blue": 0 }, "highlight":{ "red": 178, "green": 34, "blue": 34 }}
 ];
 // End Settings
 
@@ -78,8 +78,8 @@ var colOffset = -(Math.floor( numColumns / 2 ));
 var rowOffset = -(Math.floor( numRows / 2 ));
 var tileOffsetX = ( numColumns % 2 === 0 ) ? tileDimensionX/2 : 0;
 var tileOffsetZ = ( numRows % 2 === 0 ) ? tileDimensionZ/2 : 0;
-//print("\ncolOffset = " + colOffset + ", numColumns = " + numColumns + "\nrowOffset = " + rowOffset + ", numRows = " +
-//numRows + "\n( numColumns % 2 == 0 ): " + ( numColumns % 2 == 0 ) + " -- tileOffsetX = " + tileOffsetX + ", tileOffsetZ = " + tileOffsetZ);
+// print("\ncolOffset = " + colOffset + ", numColumns = " + numColumns + "\nrowOffset = " + rowOffset + ", numRows = " +
+// numRows + "\n( numColumns % 2 == 0 ): " + ( numColumns % 2 == 0 ) + " -- tileOffsetX = " + tileOffsetX + ", tileOffsetZ = " + tileOffsetZ);
 
 var floorTiles = [];
 var currentTile = undefined;
@@ -93,10 +93,11 @@ function makeTiles() {
     for (rowNum = 0; rowNum < numRows; rowNum++) {
         rowArray = [];
         for (colNum = 0; colNum < numColumns; colNum++) {
-            randomColorIndex = Math.floor( Math.random() * colorPallet.length )
+            randomColorIndex = Math.floor( Math.random() * colorPallet.length );
             boxEntity = this.makeTile( rowNum, colNum, randomColorIndex );
-          //  rowArray.push({"tile":boxEntity, "r": randomColorIndex, "rowNum": rowNum, "colNum": colNum});
+            //  rowArray.push({"tile":boxEntity, "r": randomColorIndex, "rowNum": rowNum, "colNum": colNum});
 		    rowArray.push({"tile":boxEntity, "r": randomColorIndex});
+            // log("rowArray", rowArray);
         }
         floorTiles.push(rowArray);
     }
@@ -105,28 +106,28 @@ function makeTiles() {
 function makeTile( rowNum, colNum, randomColorIndex) {
     var positionX, positionZ, tileProps;
 
-    positionX = (colNum + colOffset) * tileDimensionX  + tileOffsetX;
-    print("positionX:", positionX);
+    positionX = (colNum + colOffset) * tileDimensionX + tileOffsetX;
+    // print("positionX:", positionX);
     positionX = positionX + positionXOffset;
-    print("positionX-offset:", positionX);
-    positionZ = (rowNum + rowOffset) * tileDimensionZ  + tileOffsetZ;
-    print("positionz:", positionZ);
+    // print("positionX-offset:", positionX);
+    positionZ = (rowNum + rowOffset) * tileDimensionZ + tileOffsetZ;
+    // print("positionz:", positionZ);
     positionZ = positionZ + positionZOffset;
-    print("positionZ-offset:", positionZ);
+    // print("positionZ-offset:", positionZ);
 
     tileProps = {
-       type: 'Box',
-       name: 'DiscoFloor_' + rowNum + '_' + colNum,
-       color:  colorPallet[randomColorIndex].base,
-       position: { "x": positionX, "y":  positionY, "z": positionZ },
-       grabbable: false,
-       dimensions: {
-           "x": tileDimensionX,
-           "y": tileDimensionY,
-           "z": tileDimensionZ
-       },
-       userData: JSON.stringify({"colorIndex": randomColorIndex})
-    }
+        type: 'Box',
+        name: 'DiscoFloor_' + rowNum + '_' + colNum,
+        color:  colorPallet[randomColorIndex].base,
+        position: { "x": positionX, "y":  positionY, "z": positionZ },
+        grabbable: false,
+        dimensions: {
+            "x": tileDimensionX,
+            "y": tileDimensionY,
+            "z": tileDimensionZ
+        },
+        userData: JSON.stringify({"colorIndex": randomColorIndex})
+    };
 
     return Entities.addEntity(tileProps);
 }
@@ -134,21 +135,25 @@ function makeTile( rowNum, colNum, randomColorIndex) {
 function makeZone(){
     // Because the registration point is in the middle of a zone just give the zone the dimensions
     // and place it at 0 and it will automatically be centered correctly
+
+    // print("positionXOffset", positionXOffset);
+    // print("positionYOffset", positionZOffset);
+
     var zoneProps = {
-       type: 'Zone',
-       name: 'DiscoFloorSensorZone',
-       script: scriptURL_discoZone,
-       position: {
-           "x": 0,
-           "y": positionY + tileDimensionY,
-           "z": 0,
-       },
-       dimensions: {
-           "x": numColumns * tileDimensionX,
-           "y": positionY + tileDimensionY + 4,
-           "z": numRows * tileDimensionZ
-       },
-    }
+        type: 'Zone',
+        name: 'DiscoFloorSensorZone',
+        script: scriptURL_discoZone,
+        position: {
+            "x": positionXOffset,
+            "y": positionY + tileDimensionY,
+            "z": positionZOffset
+        },
+        dimensions: {
+            "x": numColumns * tileDimensionX,
+            "y": positionY + tileDimensionY + 4,
+            "z": numRows * tileDimensionZ
+        }
+    };
     discoFloorSensorZone = Entities.addEntity(zoneProps);
 }
 
@@ -160,10 +165,12 @@ function update() {
     z = Math.floor(footPosition.z);
     colNum = Math.ceil((x - tileDimensionX/2) / tileDimensionX) - colOffset;
     rowNum = Math.ceil((z - tileDimensionZ/2) / tileDimensionZ) - rowOffset;
-
+    log('in update:colNum', colNum);
+    log('in update:rowNum', rowNum);
+    log('=floorTiles', floorTiles);
     if ( !currentTile ) {
         setCurrentTile( rowNum, colNum );
-        } else {
+    } else {
         if ( rowNum != currentTile.rowNum || colNum != currentTile.colNum ) {
             unsetCurrentTile();
             setCurrentTile( rowNum, colNum );
@@ -174,13 +181,25 @@ function update() {
 }
 
 function setCurrentTile(rowNum, colNum) {
-
-    if ( typeof floorTiles[rowNum] === undefined  || typeof floorTiles[rowNum][colNum] === undefined ) {
-        // tile doesn't exist - so returning
-        return;
+    try {
+        if ( typeof floorTiles[rowNum] === undefined || typeof floorTiles[rowNum][colNum] === undefined ) {
+            // tile doesn't exist - so returning
+            return;
+        }
+    } catch (e){
+        print("e", e);
     }
-    currentTile = floorTiles[rowNum][colNum];
-    setTileColor('highlight');
+    try {
+        log("rowNum:", rowNum);
+        log("colNum:", colNum);
+
+        currentTile = floorTiles[rowNum][colNum];
+        setTileColor('highlight');
+    } catch (e){
+        log('e', e);
+
+    }
+
 }
 
 function unsetCurrentTile() {
@@ -197,11 +216,13 @@ function setTileColor(state) {
 function handleMessages(channel, message, sender) {
     if (sender === MyAvatar.sessionUUID) {
         if (channel === 'zoneEntered' && !updateConnected) {
+            log('zoneEntered',updateConnected)
             updateConnected = true;
             Script.update.connect(update);
         }
         if (channel === 'zoneLeft' && updateConnected) {
-            if ( currentTile  ) {
+            log('zoneLeft',updateConnected)
+            if ( currentTile ) {
                 unsetCurrentTile();
             }
             updateConnected = false;
@@ -243,9 +264,17 @@ function cleanUp() {
             Entities.deleteEntity(floorTiles[rowNum][colNum].tile);
         }
     }
-     floorTiles = [];
+    floorTiles = [];
 
     Entities.deleteEntity(discoFloorSensorZone);
 }
 
 init();
+
+function log(describer, text){
+    text = text || '';
+    print('&======');
+    print(describer + ": ");
+    print(JSON.stringify(text));
+    print('======&');
+}
